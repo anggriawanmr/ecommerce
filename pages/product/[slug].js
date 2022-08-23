@@ -10,10 +10,10 @@ import { urlFor, client } from '../../lib/client';
 import { Product } from '../../components';
 import { useStateContext } from '../../context/StateContext';
 
-const ProductDetails = ({ products, product }) => {
+const ProductDetails = ({ product, products }) => {
   const { image, name, details, price } = product;
   const [index, setIndex] = useState(0);
-  const { decQty, incQty, qty, onAdd } = useStateContext();
+  const { decQty, incQty, qty, onAdd, setShowCart } = useStateContext();
 
   return (
     <div>
@@ -28,6 +28,7 @@ const ProductDetails = ({ products, product }) => {
           <div className="small-images-container">
             {image?.map((item, i) => (
               <img
+                key={i}
                 src={urlFor(item)}
                 className={
                   i === index ? 'small-image selected-image' : 'small-image'
@@ -49,7 +50,7 @@ const ProductDetails = ({ products, product }) => {
             </div>
             <p>(20)</p>
           </div>
-          <h4>Details</h4>
+          <h4>Details: </h4>
           <p>{details}</p>
           <p className="price">${price}</p>
           <div className="quantity">
@@ -58,9 +59,7 @@ const ProductDetails = ({ products, product }) => {
               <span className="minus" onClick={decQty}>
                 <AiOutlineMinus />
               </span>
-              <span className="num" onClick="">
-                {qty}
-              </span>
+              <span className="num">{qty}</span>
               <span className="plus" onClick={incQty}>
                 <AiOutlinePlus />
               </span>
